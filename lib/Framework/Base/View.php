@@ -19,7 +19,7 @@ class View
         $this->route = \Framework\Router::getRoute();
     }
 
-    function render($data)
+    function render(array $data = [])
     {
         $path = App::$store->get('path');
         $path = $path ? $path . '/' : '';
@@ -28,13 +28,13 @@ class View
         $prefix = !empty($this->route['prefix']) ? $this->route['prefix'] . '/' : '';
         $viewFile = "{$path}Views/{$prefix}{$this->route['controller']}/{$view}View.php";
 
-        if (is_array($data)) extract($data);
+        if ($data) extract($data);
         if (is_file($viewFile)) {
             ob_start();
             require_once $viewFile;
             $content = ob_get_clean();
         } else
-            throw new \Exception("Представление {$viewFile} не найден", 404);
+            throw new \Exception("Представление {$viewFile} не найдено", 404);
 
         if ($this->layout === false)
             return $content;

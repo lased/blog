@@ -6,12 +6,12 @@ class Database
 {
     use TSingleton;
 
-    function __construct($args = [])
+    function __construct(array $args = [])
     {
         $config = $args[0] ?? [];
 
         if (!$config)
-            throw new \Exception('Server error: Database config not specifed', 500);
+            throw new \Exception('Не объявлена конфигурация базы данных', 500);
 
         class_alias('\RedBeanPHP\R', '\R');
         \R::setup(
@@ -21,7 +21,7 @@ class Database
         );
 
         if (!\R::testConnection())
-            throw new \Exception('Server error: No connection to database', 500);
+            throw new \Exception('Нет подключения к базе данных', 500);
 
         \R::freeze();
     }

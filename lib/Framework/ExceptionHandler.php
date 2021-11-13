@@ -8,6 +8,8 @@ class ExceptionHandler
 
     function __construct(string $path)
     {
+        if (!$path) throw new \Exception('Не корректный путь к файлу логов');
+
         $this->path = $path;
 
         if (defined('PRODUCTION'))
@@ -17,7 +19,7 @@ class ExceptionHandler
         set_exception_handler([$this, 'exceptionHandler']);
     }
 
-    function exceptionHandler($exception)
+    function exceptionHandler(\Throwable $exception)
     {
         $this->logToFile(
             $exception->getFile(),
@@ -27,13 +29,13 @@ class ExceptionHandler
         $this->showException($exception);
     }
 
-    private function showException($exception)
+    private function showException(\Throwable $exception)
     {
         var_dump($exception);
         die;
     }
 
-    private function logToFile($file  = '', $line = '', $message = '')
+    private function logToFile(string $file  = '', string $line = '', string $message = '')
     {
         $now = date('d-m-Y H:i:s');
         $content = "[{$now}] Исключение: {$message}\nФайл: {$file}\nСтрока: {$line}\n\n";

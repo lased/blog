@@ -8,6 +8,7 @@
         }
     },
     "require": {
-        "gabordemooij/redbean": "^5.7"
+        "gabordemooij/redbean": "^5.7",
+        "rakit/validation": "^1.4"
     }
 }

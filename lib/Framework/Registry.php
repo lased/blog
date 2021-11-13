@@ -7,17 +7,17 @@ class Registry
     use TSingleton;
     private $properties = [];
 
-    function get($key)
+    function get(string $key)
     {
         return $this->properties[$key] ?? null;
     }
 
-    function set($key, $value)
+    function set(string $key, $value)
     {
         return $this->properties[$key] = $value;
     }
 
-    function remove($key)
+    function remove(string $key)
     {
         unset($this->properties[$key]);
 
