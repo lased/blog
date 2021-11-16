@@ -18,4 +18,14 @@ abstract class Controller
         $viewObject = new View($this->layout, $this->view);
         $viewObject->render($data);
     }
+
+    function responseJSON($array, $headers = [])
+    {
+        foreach ($headers as $key => $value)
+            header("{$key}: {$value}");
+
+        $headers['Content-Type'] = 'application/json';
+        echo json_encode($array);
+        exit;
+    }
 }

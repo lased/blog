@@ -21,6 +21,22 @@ class UserModel extends Model
 
     static function rules()
     {
-        return [];
+        return [
+            'email' => 'required|email',
+            'password' => 'required|min:5',
+        ];
+    }
+
+    function login()
+    {
+        $user = $this->findOne('email = ?', [$this->email]);
+
+        if ($user && password_verify($this->password, $user['password'])) {
+            $_SESSION['user'] = $user;
+
+            return true;
+        }
+
+        return false;
     }
 }

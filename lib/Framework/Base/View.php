@@ -37,7 +37,7 @@ class View
             throw new \Exception("Представление {$viewFile} не найдено", 404);
 
         if ($this->layout === false)
-            return $content;
+            echo $content;
         elseif (is_file($layoutFile))
             require_once $layoutFile;
         else

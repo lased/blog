@@ -22,7 +22,7 @@ class Router
     static function dispatch(string $uri)
     {
         $uri = self::removeQueryString($uri);
-        self::add('^(?P<controller>[a-zA-Z0-9-]+)?/?(?P<action>[a-zA-Z0-9-]+)?$');
+        self::add('^(?P<controller>[a-zA-Z0-9-]+)?\/?(?P<action>[a-zA-Z0-9-]+)?$');
 
         if (self::matchRoute($uri)) {
             $prefix = !empty(self::$route['prefix']) ? self::$route['prefix'] . '\\' : '';
@@ -35,13 +35,19 @@ class Router
 
                 if (method_exists($controllerObject, $action)) {
                     $data = $controllerObject->$action();
-                    $controllerObject->getView($data);
+                    $controllerObject->getView($data ?? []);
                 } else
                     throw new \Exception("Метод {$action} не найден", 404);
             } else
                 throw new \Exception("Контроллер {$controller} не найден", 404);
         } else
             throw new \Exception("Страница не найдена", 404);
+    }
+
+    static function redirect(string $uri)
+    {
+        header("Location: $uri");
+        exit;
     }
 
     private static function matchRoute(string $uri)

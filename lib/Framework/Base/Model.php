@@ -2,11 +2,12 @@
 
 namespace Framework\Base;
 
+use Framework\App;
 use Rakit\Validation\Validator;
 
 class Model
 {
-    private $errors = [];
+    private $errors;
     private $table;
     private $rules;
 
@@ -69,17 +70,18 @@ class Model
         return $attributes;
     }
 
-    function validation()
+    function getErrors()
     {
-        $validator = new Validator;
-        $attributes = $this->getAttributes();
+        if (!$this->errors) return [];
 
-        return $validator->make($attributes, $this->rules);
+        return $this->errors->all();
     }
 
     function validate()
     {
-        $validation = $this->validation();
+        $validator = new Validator;
+        $validation = $validator->make($this->getAttributes(), $this->rules);
+        $validation->setMessages(App::$store->get('translate')['validator'] ?? []);
         $validation->validate();
 
         if ($validation->fails()) {
@@ -131,6 +133,15 @@ class Model
     function findById(int $id)
     {
         $result = \R::findOne($this->table, 'id = ?', [$id]);
+
+        if ($result) return $result->export();
+
+        return null;
+    }
+
+    function findOne(string $sql, array $params)
+    {
+        $result = \R::findOne($this->table, $sql, $params);
 
         if ($result) return $result->export();
 
