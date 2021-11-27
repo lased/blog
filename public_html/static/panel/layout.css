@@ -1,0 +1,23 @@
+@import url("/static/components/reset.css");
+@import url("/static/components/loader/loader.css");
+@import url("/static/components/fontawesome.css");
+@import url("/static/components/header.css");
+
+.content {
+  padding: 60px 25px;
+  margin: 66px auto;
+  max-width: 1280px
+}
+
+.content__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 50px
+}
+
+.content__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-right: auto
+}

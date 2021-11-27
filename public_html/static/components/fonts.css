@@ -1,0 +1,11 @@
+@font-face {
+  font-family: Magnolia;
+  src: url(/static/assets/fonts/Magnolia.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal
+}
+
+* {
+  font-size: 1rem;
+  font-family: "Magnolia"
+}

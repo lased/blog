@@ -1,0 +1,159 @@
+.input {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #2d3748;
+  background-color: transparent;
+  color: #fff;
+  outline: none
+}
+
+.input:hover {
+  border-color: #fff
+}
+
+.input:focus {
+  border-color: #7582eb
+}
+
+.input:focus:invalid {
+  border-color: red
+}
+
+.input::-webkit-input-placeholder {
+  color: #fff
+}
+
+.input::-moz-placeholder {
+  color: #fff
+}
+
+.input:-ms-input-placeholder {
+  color: #fff
+}
+
+.input::-ms-input-placeholder {
+  color: #fff
+}
+
+.input::placeholder {
+  color: #fff
+}
+
+.select {
+  position: relative
+}
+
+.select__current,
+.select__list {
+  list-style: none;
+  margin: 0;
+  padding: 0
+}
+
+.select__arrow {
+  margin-left: 10px
+}
+
+.select__current:focus+.select__list {
+  opacity: 1;
+  -webkit-animation-name: none;
+  animation-name: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0
+}
+
+.select__current {
+  padding: 5px 15px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center
+}
+
+.select__current:hover,
+.select__current:focus {
+  background-color: rgba(255, 255, 255, .08);
+  cursor: pointer
+}
+
+.select__current:focus {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0
+}
+
+.select__value {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden
+}
+
+.select__list {
+  position: absolute;
+  padding: 5px 0;
+  width: 100%;
+  background-color: #111827;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 10px 15px rgba(0, 0, 0, .24);
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, .24);
+  opacity: 0;
+  -webkit-animation-name: HideList;
+  animation-name: HideList;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-delay: .5s;
+  animation-delay: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-timing-function: step-start;
+  animation-timing-function: step-start
+}
+
+@-webkit-keyframes HideList {
+  from {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1)
+  }
+
+  to {
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0)
+  }
+}
+
+@keyframes HideList {
+  from {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1)
+  }
+
+  to {
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0)
+  }
+}
+
+.select__label {
+  padding: 5px 20px;
+  display: block
+}
+
+.select__label:hover {
+  background-color: rgba(255, 255, 255, .08);
+  cursor: pointer
+}
+
+.select__input,
+.select__text {
+  display: none
+}
+
+.select__input:checked+.select__text {
+  display: block
+}

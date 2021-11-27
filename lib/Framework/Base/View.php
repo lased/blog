@@ -14,7 +14,7 @@ class View
 
     function __construct($layout, $view)
     {
-        $this->layout = $layout ?? (defined("LAYOUT") ? constant('LAYOUT') : 'DefaultLayout');
+        $this->layout = ucfirst($layout ?? (defined("LAYOUT") ? constant('LAYOUT') : 'default'));
         $this->view = $view;
         $this->route = \Framework\Router::getRoute();
     }
@@ -23,7 +23,7 @@ class View
     {
         $path = App::$store->get('path');
         $path = $path ? $path . '/' : '';
-        $layoutFile = "{$path}Layouts/{$this->layout}.php";
+        $layoutFile = "{$path}Layouts/{$this->layout}Layout.php";
         $view = Helpers::camelCase($this->view ?? $this->route['action']);
         $prefix = !empty($this->route['prefix']) ? $this->route['prefix'] . '/' : '';
         $viewFile = "{$path}Views/{$prefix}{$this->route['controller']}/{$view}View.php";

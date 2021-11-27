@@ -1,0 +1,149 @@
+@import url("/static/components/button.css");
+@import url("/static/components/table.css");
+@import url("/static/components/form.css");
+
+.content-sort {
+  max-width: 30%
+}
+
+.content-sort__current {
+  border: 1px solid #2d3748;
+  text-align: center;
+  padding: 10px 15px
+}
+
+.content-sort__list {
+  width: 100%
+}
+
+.content-sort__label {
+  padding: 10px 15px
+}
+
+.content-sort__text {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.content-pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end
+}
+
+.content-pagination__select {
+  margin: 0 25px 0 10px
+}
+
+.content-pagination__arrows {
+  margin-left: 20px
+}
+
+.content-pagination__arrow {
+  padding: 10px
+}
+
+.content-table__th {
+  text-align: center
+}
+
+.content-table__th:first-child {
+  width: 160px;
+  border-radius: 0
+}
+
+.content-table__th:last-child {
+  width: 120px;
+  border-radius: 0
+}
+
+.content-table__tbody-td:first-child {
+  text-align: center
+}
+
+.content-table__action {
+  padding: 10px
+}
+
+.content-table__group-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between
+}
+
+.content-seacher {
+  margin-right: 30px;
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1
+}
+
+.content-seacher__input {
+  width: 100%;
+  padding: 10px 15px 10px 40px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis
+}
+
+.content-seacher__icon {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 15px
+}
+
+.content__add-btn i {
+  margin-right: 10px
+}
+
+.content__filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #111827;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px
+}
+
+@media (max-width: 1199px) {
+  .content-sort {
+    max-width: 35%
+  }
+}
+
+@media (max-width: 767px) {
+  .content-sort {
+    max-width: 45%
+  }
+
+  .content-table__th:first-child {
+    width: auto
+  }
+
+  .content-table__th:last-child {
+    display: none
+  }
+
+  .content-table__tbody-td:last-child {
+    display: none
+  }
+}

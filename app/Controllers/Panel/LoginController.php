@@ -12,17 +12,24 @@ class LoginController extends Controller
 
     function indexAction()
     {
-        if (!$_POST) return;
+        if (isset($_SESSION['user'])) {
+            Router::redirect('/panel');
+        }
+        if (!$_POST) {
+            return;
+        }
 
         $user = new UserModel($_POST);
         $result = ['email' => $user->email];
 
-        if ($user->validate())
-            if ($user->login())
+        if ($user->validate()) {
+            if ($user->login()) {
                 Router::redirect('/panel');
-            else
+            } else {
                 return $result + ['errors' => ['Не верный логин или пароль']];
-        else
+            }
+        } else {
             return $result + ['errors' => $user->getErrors()];
+        }
     }
 }

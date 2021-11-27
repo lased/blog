@@ -1,15 +1,13 @@
 <?
 
 namespace App\Controllers\Panel;
+use Framework\Router;
 
-use Framework\Base\Controller;
-
-class MainController extends Controller
+class MainController extends PanelController
 {
-    public $layout = '';
 
     function indexAction()
     {
-        return [];
+        Router::redirect('/panel/article/list');
     }
 }
