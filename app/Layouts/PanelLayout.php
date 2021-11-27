@@ -42,7 +42,13 @@
     <script defer="defer" src="/static/components/loader/loader.js"></script>
     <? if (isset($this->params['scripts'])) : ?>
         <? foreach ($this->params['scripts'] as $value) : ?>
-            <script defer="defer" src="<?= $value['src'] ?>"></script>
+            <? if (isset($value['text'])) : ?>
+                <script>
+                    <?= $value['text'] ?>
+                </script>
+            <? else : ?>
+                <script defer="defer" src="<?= $value['src'] ?>"></script>
+            <? endif; ?>
         <? endforeach; ?>
     <? endif; ?>
 </body>

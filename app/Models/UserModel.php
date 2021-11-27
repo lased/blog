@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DateTime;
 use Framework\Base\Model;
 
 class UserModel extends Model

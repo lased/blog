@@ -58,8 +58,8 @@ class Router
                     if (is_string($key))
                         $route[$key] = $value;
 
-                $route['controller'] = Helpers::camelCase($route['controller'] ?? 'Main');
-                $route['action'] = Helpers::camelCase($route['action'] ?? 'Index');
+                $route['controller'] = Helpers::camelCase($route['controller'] ? $route['controller'] : 'Main');
+                $route['action'] = Helpers::camelCase($route['action'] ? $route['action'] : 'Index');
                 self::$route =  $route;
 
                 return true;

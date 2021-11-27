@@ -110,18 +110,17 @@ class Model
         try {
             $entry = \R::load($this->table, $id);
             $entry = $this->loadAttributes($entry);
-            var_dump($entry);
-            die;
+
             return \R::store($entry);
         } catch (\Throwable $th) {
             return false;
         }
     }
 
-    function delete(int $id)
+    static function delete(int $id)
     {
         try {
-            $entry = \R::load($this->table, $id);
+            $entry = \R::load(static::table(), $id);
             \R::trash($entry);
 
             return $id;
@@ -130,25 +129,25 @@ class Model
         }
     }
 
-    function findById(int $id)
+    static function findById(int $id)
     {
-        $result = \R::findOne($this->table, 'id = ?', [$id]);
+        $result = \R::findOne(static::table(), 'id = ?', [$id]);
 
         if ($result) return $result->export();
 
         return null;
     }
 
-    function findOne(string $sql, array $params)
+    static function findOne(string $sql, array $params)
     {
-        $result = \R::findOne($this->table, $sql, $params);
+        $result = \R::findOne(self::table(), $sql, $params);
 
         if ($result) return $result->export();
 
         return null;
     }
 
-    function findAll(array $options = [])
+    static function findAll(array $options = [])
     {
         $order =
             !empty($options['order']) && !empty($options['order']['column']) && !empty($options['order']['dir'])
@@ -158,7 +157,7 @@ class Model
         $offset = !empty($options['offset']) ? $options['offset'] : 0;
         $limit = !empty($options['limit']) ? $options['limit'] : 10;
 
-        $entries = \R::findAll($this->table, " {$where} {$order} LIMIT :limit OFFSET :offset ", [
+        $entries = \R::findAll(static::table(), " {$where} {$order} LIMIT :limit OFFSET :offset ", [
             ':limit' => $limit,
             ':offset' => $offset
         ]);
@@ -166,9 +165,9 @@ class Model
         return \R::exportAll($entries);
     }
 
-    function count()
+    static function count()
     {
-        return \R::count($this->table);
+        return \R::count(static::table());
     }
 
     private function loadAttributes(\RedBeanPHP\OODBBean $entry)
