@@ -140,7 +140,7 @@ class Model
 
     static function findOne(string $sql, array $params)
     {
-        $result = \R::findOne(self::table(), $sql, $params);
+        $result = \R::findOne(static::table(), $sql, $params);
 
         if ($result) return $result->export();
 

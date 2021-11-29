@@ -1,8 +1,17 @@
 <?
-$this->params['styles'] = [
-  ['href' => '/static/panel/article/list/index.css'],
+$this->title .= "Панель управления | Статьи";
+$this->params = [
+  'styles' => [
+    ['href' => '/static/panel/article/list/index.css']
+  ],
+  'scripts' => [
+    ['src' => '/static/panel/article/list/index.js']
+  ]
 ];
-$rows = [5, 10, 15];
+$limit = key(array_filter($rowlimits, function ($value) {
+  return $value;
+}));
+$queryString = $this->route['queryString'];
 ?>
 
 <div class="content__header">
@@ -13,30 +22,25 @@ $rows = [5, 10, 15];
 </div>
 <div class="content__filter">
   <div class="content-seacher">
-    <input class="input content-seacher__input" name="search" placeholder="Поиск по названию">
+    <input class="input content-seacher__input" name="search" placeholder="Поиск по названию" value="<?= $search ?>">
     <i class="content-seacher__icon fa fa-search"></i>
   </div>
   <div class="select content-sort">
     <ul class="select__current content-sort__current" tabindex="0">
-      <li class="select__value">
-        <input class="select__input" id="sort-select-0" type="radio" name="sort" value="date|ASC" checked="checked">
-        <div class="select__text content-sort__text">Дата публикации по возрастанию</div>
-      </li>
-      <li class="select__value">
-        <input class="select__input" id="sort-select-1" type="radio" name="sort" value="date|DESC">
-        <div class="select__text content-sort__text">Дата публикации по убывани</div>
-      </li>
+      <? foreach ($sortValues as $index => $sort) : ?>
+        <li class="select__value">
+          <input class="select__input" id="sort-select-<?= $index ?>" type="radio" name="sort" value="<?= $sort['value'] ?>" <?= isset($sort['checked']) ? 'checked' : '' ?>>
+          <div class="select__text content-sort__text"><?= $sort['text'] ?></div>
+        </li>
+      <? endforeach; ?>
       <i class="select__arrow fa fa-angle-down"></i>
     </ul>
     <ul class="select__list content-sort__list">
-      <li>
-        <label class="select__label content-sort__label" for="sort-select-undefined">Дата публикации по
-          возрастанию</label>
-      </li>
-      <li>
-        <label class="select__label content-sort__label" for="sort-select-undefined">Дата публикации по
-          убывани</label>
-      </li>
+      <? foreach ($sortValues as $index => $sort) : ?>
+        <li>
+          <label class="select__label content-sort__label" for="sort-select-<?= $index ?>"><?= $sort['text'] ?></label>
+        </li>
+      <? endforeach; ?>
     </ul>
   </div>
 </div>
@@ -54,27 +58,39 @@ $rows = [5, 10, 15];
         <div class="content-pagination"><span>Записей на странице:</span>
           <div class="select content-pagination__select">
             <ul class="select__current" tabindex="0">
-              <? foreach ($rows as $count) : ?>
+              <? foreach ($rowlimits as $value => $checked) : ?>
                 <li class="select__value">
-                  <input class="select__input" id="pagination-select-value-<?= $count ?>" type="radio" name="rows-limit" value="<?= $count ?>" checked="checked">
-                  <div class="select__text"><?= $count ?></div>
+                  <input class="select__input" id="pagination-select-value-<?= $value ?>" type="radio" name="limit" value="<?= $value ?>" <?= $checked ? 'checked' : '' ?>>
+                  <div class="select__text"><?= $value ?></div>
                 </li>
               <? endforeach; ?>
               <i class="select__arrow fa fa-angle-down"></i>
             </ul>
             <ul class="select__list">
-              <? foreach ($rows as $count) : ?>
-                <li><label class="select__label" for="pagination-select-value-5"><?= $count ?></label></li>
+              <? foreach ($rowlimits as $value => $checked) : ?>
+                <li><label class="select__label" for="pagination-select-value-<?= $value ?>"><?= $value ?></label></li>
               <? endforeach; ?>
             </ul>
-          </div><span>1-3 из 3</span>
+          </div>
+          <span>
+            <? $start = ($page - 1) * $limit + 1; ?>
+            <?= $start ?>-<?= $start - 1 + count($articles) ?>
+            из <?= $rowsCount ?>
+          </span>
           <div class="content-pagination__arrows">
-            <a class="btn content-pagination__arrow">
-              <i class="fa fa-arrow-left"></i>
-            </a>
-            <a class="btn content-pagination__arrow">
-              <i class="fa fa-arrow-right"></i>
-            </a>
+            <? $queryString->setUri('page', $page - 1); ?>
+            <button class="btn content-pagination__btn" <? if (!$page - 1) : ?> disabled <? endif; ?>>
+              <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
+                <i class="fa fa-arrow-left"></i>
+              </a>
+            </button>
+            <? $queryString->setUri('page', $page + 1); ?>
+            <button class="btn content-pagination__btn" <? if (ceil($rowsCount / $limit) == $page) : ?> disabled <? endif; ?>>
+              <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
+                <i class="fa fa-arrow-right"></i>
+              </a>
+            </button>
+            <? $queryString->removeUri('page'); ?>
           </div>
         </div>
       </td>

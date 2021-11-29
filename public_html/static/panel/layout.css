@@ -21,3 +21,9 @@
   font-weight: bold;
   margin-right: auto
 }
+
+@media (max-width: 767px) {
+  .content {
+    padding: 60px 5px;
+  }
+}

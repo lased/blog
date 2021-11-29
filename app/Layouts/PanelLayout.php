@@ -1,3 +1,11 @@
+<?
+$navbar = [
+    [
+        'text' => 'Статьи',
+        'href' => '/panel/article/list'
+    ]
+];
+?>
 <!doctype html>
 <html>
 
@@ -5,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Панель управления</title>
+    <title><?= $this->title ?></title>
     <link rel="stylesheet" href="/static/panel/layout.css">
     <? if (isset($this->params['styles'])) : ?>
         <? foreach ($this->params['styles'] as $value) : ?>
@@ -30,8 +38,13 @@
             <div class="header__title">Панель управления</div>
             <nav class="nav header-nav" id="navbar">
                 <ul class="nav__list header-nav__list">
-                    <li class="nav__item header-nav__item"><a class="nav__link header-nav__link--active header-nav__link" href="#">Nav 1</a></li>
-                    <li class="nav__item header-nav__item"><a class="nav__link header-nav__link" href="#">Nav 2</a></li>
+                    <? foreach ($navbar as $nav) : ?>
+                        <li class="nav__item header-nav__item">
+                            <a class="nav__link header-nav__link <?= $nav['href'] !== rtrim($_SERVER['REQUEST_URI'], '/') ?: 'header-nav__link--active' ?>" href="<?= $nav['href'] ?>">
+                                <?= $nav['text'] ?>
+                            </a>
+                        </li>
+                    <? endforeach; ?>
                 </ul>
             </nav><a class="header__backdrop" href="#"></a>
         </div>

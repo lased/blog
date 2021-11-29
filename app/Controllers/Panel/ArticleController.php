@@ -11,9 +11,53 @@ class ArticleController extends PanelController
 
   function listAction()
   {
-    $articles = ArticleModel::findAll();
+    $page = 1;
+    $rowlimits = [
+      '5' => false,
+      '10' => false,
+      '15' => false
+    ];
+    $sortValues = [
+      [
+        'value' => 'date|ASC',
+        'text' => 'Дата публикации по возрастанию'
+      ],
+      [
+        'value' => 'date|DESC',
+        'text' => 'Дата публикации по убыванию'
+      ],
+    ];
 
-    return ['articles' => $articles];
+    if (isset($_GET['limit'])) {
+      $rowlimits[$_GET['limit']] = true;
+    } else {
+      $rowlimits['5'] = true;
+    }
+
+    if (isset($_GET['sort'])) {
+      $sortValues = array_map(function ($sort) {
+        if ($sort['value'] === $_GET['sort']) {
+          $sort['checked'] = true;
+        }
+
+        return $sort;
+      }, $sortValues);
+    } else {
+      $sortValues[0]['checked'] = true;
+    }
+
+    if (isset($_GET['page'])) {
+      $page = intval($_GET['page']) || 1;
+    }
+
+    return [
+      'articles' => ArticleModel::findAll(),
+      'rowsCount' => ArticleModel::count(),
+      'rowlimits' => $rowlimits,
+      'sortValues' => $sortValues,
+      'page' => $page,
+      'search' => $_GET['search'] ?? ''
+    ];
   }
 
   function createAction()

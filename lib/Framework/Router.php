@@ -21,7 +21,9 @@ class Router
 
     static function dispatch(string $uri)
     {
-        $uri = self::removeQueryString($uri);
+        $uriArr = explode('?', $uri);
+        $queryString = $uriArr[1] ?? '';
+        $uri = trim($uriArr[0], '/');
         self::add('^(?P<controller>[a-zA-Z0-9-]+)?\/?(?P<action>[a-zA-Z0-9-]+)?$');
 
         if (self::matchRoute($uri)) {
@@ -29,6 +31,7 @@ class Router
             $camelCaseController = self::$route['controller'];
             $controller = "\App\Controllers\\" . $prefix . "{$camelCaseController}Controller";
             $action = lcfirst(self::$route['action']) . 'Action';
+            self::$route['queryString'] = new QueryString($queryString);
 
             if (class_exists($controller)) {
                 $controllerObject = new $controller();
@@ -58,8 +61,8 @@ class Router
                     if (is_string($key))
                         $route[$key] = $value;
 
-                $route['controller'] = Helpers::camelCase($route['controller'] ? $route['controller'] : 'Main');
-                $route['action'] = Helpers::camelCase($route['action'] ? $route['action'] : 'Index');
+                $route['controller'] = Helpers::camelCase(isset($route['controller']) ? $route['controller'] : 'Main');
+                $route['action'] = Helpers::camelCase(isset($route['action']) ? $route['action'] : 'Index');
                 self::$route =  $route;
 
                 return true;

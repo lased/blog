@@ -1,6 +1,7 @@
 <?
 
 namespace App\Controllers\Panel;
+
 use Framework\Router;
 
 class MainController extends PanelController

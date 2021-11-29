@@ -1,4 +1,5 @@
 <?
+$this->title .= "Панель управления | " . (isset($id) ? 'Редактировать' : 'Создать') . ' статью';
 $this->params['styles'] = [
   ['href' => '/static/panel/article/index.css'],
 ];

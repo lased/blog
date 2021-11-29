@@ -28,7 +28,7 @@ class UserModel extends Model
 
     function login()
     {
-        $user = $this->findOne('email = ?', [$this->email]);
+        $user = self::findOne('email = ?', [$this->email]);
 
         if ($user && password_verify($this->password, $user['password'])) {
             $_SESSION['user'] = $user;
