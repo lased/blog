@@ -74,7 +74,7 @@ $queryString = $this->route['queryString'];
           </div>
           <span>
             <? $start = ($page - 1) * $limit + 1; ?>
-            <?= $start ?>-<?= $start - 1 + count($articles) ?>
+            <?= count($articles) === 0 ? 0 : $start ?>-<?= $start - 1 + count($articles) ?>
             из <?= $rowsCount ?>
           </span>
           <div class="content-pagination__arrows">
@@ -102,7 +102,7 @@ $queryString = $this->route['queryString'];
         <td class="table__tbody-td content-table__tbody-td"><?= $article['created_at'] ?></td>
         <td class="table__tbody-td content-table__tbody-td">
           <a class="table__link" href="/panel/article/update/<?= $article['id'] ?>">
-            <!-- <img class="table__image" src="../../../assets/images/plus.png"> -->
+            <img class="table__image" src="<?= $article['image'] ?>">
             <span class="table__title" href="#"><?= $article['title'] ?></span>
           </a>
         </td>

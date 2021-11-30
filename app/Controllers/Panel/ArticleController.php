@@ -67,13 +67,26 @@ class ArticleController extends PanelController
     if ($_POST) {
       $article = new ArticleModel($_POST);
 
-      if ($article->validate() && $article->save()) {
+      if (!empty($_FILES) && $_FILES['image']['name']) {
+        $article->image = $_FILES['image']['name'];
+      }
+
+      if ($article->validate()) {
+        $article->image = BASE_UPLOADS . $this->uploadImage($_FILES['image']);
+
+        if (!$article->save()) {
+          throw new \Exception('Произошла ошибка при сохранении записи', 500);
+        }
+
         Router::redirect($this->articleListUrl);
 
         return null;
       }
 
-      return $article->getErrors();
+      return [
+        'errors' => $article->getErrors(),
+        'article' => $article
+      ];
     }
 
     return null;
@@ -83,9 +96,19 @@ class ArticleController extends PanelController
   {
     $this->view = 'index';
     $this->generateExceptionByRouteId();
+    $article = ArticleModel::findById($this->route['id']);
 
     if ($_POST) {
       $updatedArticle = new ArticleModel($_POST);
+
+      if (!empty($_FILES) && $_FILES['image']['name']) {
+        if (!unlink(PUBLIC_HTML . $article['image']) || !rmdir(dirname(PUBLIC_HTML . $article['image']))) {
+          throw new \Exception('Произошла ошибка при сохранении записи', 500);
+        }
+
+        $updatedArticle->image = BASE_UPLOADS . $this->uploadImage($_FILES['image']);
+      }
+
       $result = $updatedArticle->update($this->route['id']);
 
       if ($result) {
@@ -95,13 +118,13 @@ class ArticleController extends PanelController
       }
     }
 
-    $article = ArticleModel::findById($this->route['id']);
-
     if (!$article) {
       throw new \Exception("Статья не найдена", 404);
     }
 
-    return $article;
+    return [
+      'article' => $article
+    ];
   }
 
   function deleteAction()
@@ -113,6 +136,22 @@ class ArticleController extends PanelController
 
       return null;
     }
+  }
+
+  private function uploadImage($image)
+  {
+    $folder = \Ramsey\Uuid\Uuid::uuid4();
+    $filename = \Ramsey\Uuid\Uuid::uuid4() . '.' . preg_split('/\//', $image['type'])[1];
+    $path = "/$folder/$filename";
+
+    if (
+      !mkdir(UPLOADS . '/' . $folder)
+      || !move_uploaded_file($image['tmp_name'], UPLOADS . $path)
+    ) {
+      throw new \Exception('Произошла ошибка при создании файла на сервере', 500);
+    }
+
+    return $path;
   }
 
   private function generateExceptionByRouteId()
