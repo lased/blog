@@ -2,16 +2,42 @@
 
 namespace App\Controllers;
 
+use App\Models\ArticleModel;
 use Framework\Base\Controller;
-use App\Models\UserModel;
-use DateTime;
 
 class MainController extends Controller
 {
     function indexAction()
     {
-        $user = new UserModel();
-        var_dump($user->findAll());
-        return [];
+        $page = 1;
+        $limit = 5;
+
+        if (!empty($_GET['page'])) {
+            $page = intval($_GET['page']) ?: 1;
+        }
+
+        $search = !empty($_GET['search']) ? $_GET['search'] : '';
+        $where = !empty($search) ? [
+            'sql' => 'title LIKE :search',
+            'params' => [':search' => "%$search%"]
+        ] : [];
+
+        return [
+            'articles' => ArticleModel::findAll(
+                [
+                    // 'where' => $where,
+                    'offset' => ($page - 1) * $limit,
+                    'limit' => $limit,
+                    'order' => [
+                        'column' => 'created_at',
+                        'dir' => 'desc'
+                    ]
+                ]
+            ),
+            'page' => $page,
+            'limit' => $limit,
+            'search' => $search,
+            'rowsCount' => ArticleModel::count($where)
+        ];
     }
 }

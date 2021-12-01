@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="login">
-        <? if (isset($errors) && count($errors)) : ?>
+        <? if (!empty($errors) && count($errors)) : ?>
             <div class="login__errors">
                 <? foreach ($errors as $error) : ?>
                     <div><?= $error ?></div>

@@ -12,7 +12,7 @@ class LoginController extends Controller
 
     function indexAction()
     {
-        if (isset($_SESSION['user'])) {
+        if (!empty($_SESSION['user'])) {
             Router::redirect('/panel');
         }
         if (!$_POST) {

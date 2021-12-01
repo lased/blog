@@ -29,13 +29,13 @@ class ArticleController extends PanelController
       ],
     ];
 
-    if (isset($_GET['limit'])) {
+    if (!empty($_GET['limit'])) {
       $rowlimits[$_GET['limit']] = true;
     } else {
       $rowlimits['5'] = true;
     }
 
-    if (isset($_GET['sort'])) {
+    if (!empty($_GET['sort'])) {
       $sortValues = array_map(function ($sort) {
         if ($sort['value'] === $_GET['sort']) {
           $sort['checked'] = true;
@@ -47,7 +47,7 @@ class ArticleController extends PanelController
       $sortValues[1]['checked'] = true;
     }
 
-    if (isset($_GET['page'])) {
+    if (!empty($_GET['page'])) {
       $page = intval($_GET['page']) ?: 1;
     }
 
@@ -59,20 +59,26 @@ class ArticleController extends PanelController
     }
 
     $limit = array_search(true, $rowlimits);
+    $search = $_GET['search'] ?? '';
+    $where = !empty($search) ? [
+      'sql' => 'title LIKE :search',
+      'params' => [':search' => "%$search%"]
+    ] : [];
 
     return [
       'articles' => ArticleModel::findAll(
         [
+          'where' => $where,
           'offset' => ($page - 1) * $limit,
           'limit' => $limit,
           'order' => $order
         ]
       ),
-      'rowsCount' => ArticleModel::count(),
+      'rowsCount' => ArticleModel::count($where),
       'rowlimits' => $rowlimits,
       'sortValues' => $sortValues,
       'page' => $page,
-      'search' => $_GET['search'] ?? ''
+      'search' => $search
     ];
   }
 
@@ -172,7 +178,7 @@ class ArticleController extends PanelController
 
   private function generateExceptionByRouteId()
   {
-    if (!isset($this->route['id'])) {
+    if (empty($this->route['id'])) {
       throw new \Exception("Страница не найдена", 404);
     }
   }

@@ -1,11 +1,11 @@
 <?
-$this->title .= "Панель управления | " . (isset($article['id']) ? 'Редактировать' : 'Создать') . ' статью';
+$this->title .= "Панель управления | " . (!empty($article['id']) ? 'Редактировать' : 'Создать') . ' статью';
 $this->params['styles'] = [
   ['href' => '/static/panel/article/index.css'],
 ];
 $this->params['scripts'] = [
   ['src' => '/static/components/tinymce/tinymce.min.js'],
-  ['text' => "var contentTinyMCE = `" . (isset($article['content']) ? $article['content'] : '') . "`"],
+  ['text' => "var contentTinyMCE = `" . (!empty($article['content']) ? $article['content'] : '') . "`"],
   ['src' => '/static/panel/article/index.js']
 ];
 ?>
@@ -13,7 +13,7 @@ $this->params['scripts'] = [
 <div class="content__header">
   <div class="content__title">Статья</div>
 </div>
-<? if (isset($errors) && count($errors)) : ?>
+<? if (!empty($errors) && count($errors)) : ?>
   <div class="content-form__errors">
     <? foreach ($errors as $error) : ?>
       <div><?= $error ?></div>
@@ -38,7 +38,7 @@ $this->params['scripts'] = [
       <div class="form__field">
         <input id="input-image-file" class="input form__control" type="file" accept="image/*" name="image">
         <label class="content-form__label" for="input-image-file">
-          <? if (isset($article['id'])) : ?>
+          <? if (!empty($article['id'])) : ?>
             <img src="<?= $article['image'] ?>" class="content-form__preview">
           <? endif; ?>
           <i class="fa fa-image fa-2x"></i>
@@ -53,7 +53,7 @@ $this->params['scripts'] = [
     </a>
     <a class="btn btn-outline-secondary content-form__footer-btn" href="/panel/article/list">Отмена</a>
     <button class="btn btn-secondary content-form__footer-btn" type="submit" name="submit">
-      <?= isset($article['id']) ? 'Сохранить' : 'Создать' ?>
+      <?= !empty($article['id']) ? 'Сохранить' : 'Создать' ?>
     </button>
   </div>
 </form>

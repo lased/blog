@@ -15,7 +15,7 @@ $navbar = [
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><?= $this->title ?></title>
     <link rel="stylesheet" href="/static/panel/layout.css">
-    <? if (isset($this->params['styles'])) : ?>
+    <? if (!empty($this->params['styles'])) : ?>
         <? foreach ($this->params['styles'] as $value) : ?>
             <link rel="stylesheet" href="<?= $value['href'] ?>">
         <? endforeach; ?>
@@ -53,9 +53,9 @@ $navbar = [
         <?= $content ?>
     </main>
     <script defer="defer" src="/static/components/loader/loader.js"></script>
-    <? if (isset($this->params['scripts'])) : ?>
+    <? if (!empty($this->params['scripts'])) : ?>
         <? foreach ($this->params['scripts'] as $value) : ?>
-            <? if (isset($value['text'])) : ?>
+            <? if (!empty($value['text'])) : ?>
                 <script>
                     <?= $value['text'] ?>
                 </script>

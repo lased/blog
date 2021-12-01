@@ -29,7 +29,7 @@ $queryString = $this->route['queryString'];
     <ul class="select__current content-sort__current" tabindex="0">
       <? foreach ($sortValues as $index => $sort) : ?>
         <li class="select__value">
-          <input class="select__input" id="sort-select-<?= $index ?>" type="radio" name="sort" value="<?= $sort['value'] ?>" <?= isset($sort['checked']) ? 'checked' : '' ?>>
+          <input class="select__input" id="sort-select-<?= $index ?>" type="radio" name="sort" value="<?= $sort['value'] ?>" <?= !empty($sort['checked']) ? 'checked' : '' ?>>
           <div class="select__text content-sort__text"><?= $sort['text'] ?></div>
         </li>
       <? endforeach; ?>

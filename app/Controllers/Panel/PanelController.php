@@ -13,7 +13,7 @@ class PanelController extends Controller
     {
         parent::__construct();
 
-        if (!isset($_SESSION['user'])) {
+        if (empty($_SESSION['user'])) {
             Router::redirect('/panel/login');
         }
     }

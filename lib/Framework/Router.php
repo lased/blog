@@ -24,7 +24,7 @@ class Router
         $uriArr = explode('?', $uri);
         $queryString = $uriArr[1] ?? '';
         $uri = trim($uriArr[0], '/');
-        self::add('^(?P<controller>[a-zA-Z0-9-]+)?\/?(?P<action>[a-zA-Z0-9-]+)?$');
+        self::add('^(?P<controller>[a-zA-Z-]+)?\/?(?P<action>[a-zA-Z-]+)?\/?(?P<id>[0-9]+)?$');
 
         if (self::matchRoute($uri)) {
             $prefix = !empty(self::$route['prefix']) ? self::$route['prefix'] . '\\' : '';
@@ -61,15 +61,15 @@ class Router
                     if (is_string($key))
                         $route[$key] = $value;
 
-                $route['controller'] = Helpers::camelCase(isset($route['controller']) ? $route['controller'] : 'Main');
-                $route['action'] = Helpers::camelCase(isset($route['action']) ? $route['action'] : 'Index');
+                $route['controller'] = Helpers::camelCase(!empty($route['controller']) ? $route['controller'] : 'Main');
+                $route['action'] = Helpers::camelCase(!empty($route['action']) ? $route['action'] : 'Index');
                 self::$route =  $route;
 
                 return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 
     private static function removeQueryString(string $uri)

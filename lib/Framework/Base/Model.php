@@ -3,6 +3,7 @@
 namespace Framework\Base;
 
 use Framework\App;
+use R;
 use Rakit\Validation\Validator;
 
 class Model
@@ -153,11 +154,13 @@ class Model
             !empty($options['order']) && !empty($options['order']['column']) && !empty($options['order']['dir'])
             ? "ORDER BY {$options['order']['column']} {$options['order']['dir']}"
             : '';
-        $where = !empty($options['where']) ? $options['where'] : '';
+        $where = [
+            'sql' => !empty($options['where']['sql']) ? $options['where']['sql'] : '',
+            'params' => !empty($options['where']['params']) ? $options['where']['params'] : []
+        ];
         $offset = !empty($options['offset']) ? $options['offset'] : 0;
         $limit = !empty($options['limit']) ? $options['limit'] : 10;
-
-        $entries = \R::findAll(static::table(), " {$where} {$order} LIMIT :limit OFFSET :offset ", [
+        $entries = \R::findAll(static::table(), " {$where['sql']} {$order} LIMIT :limit OFFSET :offset ", $where['params'] + [
             ':limit' => $limit,
             ':offset' => $offset
         ]);
@@ -165,9 +168,14 @@ class Model
         return \R::exportAll($entries);
     }
 
-    static function count()
+    static function count(array $options = [])
     {
-        return \R::count(static::table());
+        $options = [
+            'sql' => !empty($options['sql']) ? $options['sql'] : '',
+            'params' => !empty($options['params']) ? $options['params'] : []
+        ];
+
+        return \R::count(static::table(), $options['sql'], $options['params']);
     }
 
     private function loadAttributes(\RedBeanPHP\OODBBean $entry)
