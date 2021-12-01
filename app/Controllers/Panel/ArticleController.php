@@ -11,6 +11,7 @@ class ArticleController extends PanelController
 
   function listAction()
   {
+    $order = [];
     $page = 1;
     $rowlimits = [
       '5' => false,
@@ -19,11 +20,11 @@ class ArticleController extends PanelController
     ];
     $sortValues = [
       [
-        'value' => 'date|ASC',
+        'value' => 'created_at|ASC',
         'text' => 'Дата публикации по возрастанию'
       ],
       [
-        'value' => 'date|DESC',
+        'value' => 'created_at|DESC',
         'text' => 'Дата публикации по убыванию'
       ],
     ];
@@ -43,15 +44,30 @@ class ArticleController extends PanelController
         return $sort;
       }, $sortValues);
     } else {
-      $sortValues[0]['checked'] = true;
+      $sortValues[1]['checked'] = true;
     }
 
     if (isset($_GET['page'])) {
-      $page = intval($_GET['page']) || 1;
+      $page = intval($_GET['page']) ?: 1;
     }
 
+    foreach ($sortValues as $value) {
+      if ($value['checked'] ?? false) {
+        $split = preg_split('/\|/', $value['value']);
+        $order = ['column' => $split[0], 'dir' => $split[1]];
+      }
+    }
+
+    $limit = array_search(true, $rowlimits);
+
     return [
-      'articles' => ArticleModel::findAll(),
+      'articles' => ArticleModel::findAll(
+        [
+          'offset' => ($page - 1) * $limit,
+          'limit' => $limit,
+          'order' => $order
+        ]
+      ),
       'rowsCount' => ArticleModel::count(),
       'rowlimits' => $rowlimits,
       'sortValues' => $sortValues,

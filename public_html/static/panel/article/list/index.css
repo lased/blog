@@ -71,12 +71,31 @@
   border-radius: 0
 }
 
+.content-table__link {
+  display: flex;
+  align-items: center;
+}
+
 .content-table__tbody-td:first-child {
   text-align: center
 }
 
 .content-table__action {
   padding: 10px
+}
+
+.content-table__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.content-table__image {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover
 }
 
 .content-table__group-btn {

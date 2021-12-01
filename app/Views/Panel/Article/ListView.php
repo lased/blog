@@ -74,12 +74,12 @@ $queryString = $this->route['queryString'];
           </div>
           <span>
             <? $start = ($page - 1) * $limit + 1; ?>
-            <?= count($articles) === 0 ? 0 : $start ?>-<?= $start - 1 + count($articles) ?>
+            <?= count($articles) === 0 ? '0-0' : $start . '-' . ($start - 1 + count($articles)) ?>
             из <?= $rowsCount ?>
           </span>
           <div class="content-pagination__arrows">
             <? $queryString->setUri('page', $page - 1); ?>
-            <button class="btn content-pagination__btn" <? if (!$page - 1) : ?> disabled <? endif; ?>>
+            <button class="btn content-pagination__btn" <? if (!($page - 1)) : ?> disabled <? endif; ?>>
               <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
                 <i class="fa fa-arrow-left"></i>
               </a>
@@ -101,9 +101,9 @@ $queryString = $this->route['queryString'];
       <tr class="table__tbody-tr">
         <td class="table__tbody-td content-table__tbody-td"><?= $article['created_at'] ?></td>
         <td class="table__tbody-td content-table__tbody-td">
-          <a class="table__link" href="/panel/article/update/<?= $article['id'] ?>">
-            <img class="table__image" src="<?= $article['image'] ?>">
-            <span class="table__title" href="#"><?= $article['title'] ?></span>
+          <a class="table__link content-table__link" href="/panel/article/update/<?= $article['id'] ?>">
+            <img class="content-table__image" src="<?= $article['image'] ?>">
+            <span class="content-table__title"><?= $article['title'] ?></span>
           </a>
         </td>
         <td class="table__tbody-td content-table__tbody-td">

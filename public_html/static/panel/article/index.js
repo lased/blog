@@ -8,7 +8,8 @@
       'alignright alignjustify | bullist numlist outdent indent | ' +
       'link | ' +
       'removeformat',
-    plugins: 'link',
+    plugins: 'link paste image',
+    paste_data_images: true,
     skin: 'oxide-dark',
     content_css: 'dark',
     language: 'ru',

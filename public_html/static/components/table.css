@@ -12,16 +12,6 @@
   cursor: pointer
 }
 
-.table__image {
-  width: 80px;
-  height: 80px;
-  margin-right: 10px;
-  float: left;
-  border-radius: 50%;
-  overflow: hidden;
-  object-fit: cover
-}
-
 .table__thead-tr {
   background-color: rgba(255, 255, 255, .08)
 }
