@@ -12,8 +12,9 @@ class ExceptionHandler
 
         $this->path = $path;
 
-        if (defined('PRODUCTION'))
+        if (defined('PRODUCTION') && constant('PRODUCTION')) {
             error_reporting(0);
+        }
 
         error_reporting(-1);
         set_exception_handler([$this, 'exceptionHandler']);
@@ -26,7 +27,10 @@ class ExceptionHandler
             $exception->getLine(),
             $exception->getMessage()
         );
-        $this->showException($exception);
+
+        if (!defined('PRODUCTION') || !constant('PRODUCTION')) {
+            $this->showException($exception);
+        }
     }
 
     private function showException(\Throwable $exception)

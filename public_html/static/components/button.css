@@ -8,6 +8,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  font-family: inherit;
 }
 
 .btn:hover {

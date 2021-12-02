@@ -1,4 +1,5 @@
 <?
+define('PRODUCTION', true);
 define('ROOT', dirname(__DIR__));
 define('APP', ROOT . '/app');
 define('CONFIG', ROOT . '/config');

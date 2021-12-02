@@ -71,9 +71,4 @@ class Router
 
         return false;
     }
-
-    private static function removeQueryString(string $uri)
-    {
-        return trim(explode('?', $uri)[0], '/');
-    }
 }
