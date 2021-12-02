@@ -120,6 +120,8 @@
   overflow: hidden;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  font-family: "Magnolia";
+  font-size: 1rem;
 }
 
 .content-seacher__icon {
