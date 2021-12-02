@@ -1,0 +1,36 @@
+@import url("/static/components/reset.css");
+@import url("/static/components/loader/loader.css");
+@import url("/static/components/fontawesome.css");
+
+body {
+  font-size: 14px;
+}
+
+.content {
+  padding: 35px 10px;
+  margin: auto;
+  max-width: 1024px;
+}
+
+.content__header {
+  padding: 20px;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.content__logo {
+  display: inline-block;
+}
+
+.content__logo i {
+  font-size: 3rem;
+}
+
+.content__logo span {
+  display: block;
+}
+@media (max-width: 767px) {
+  .content {
+    padding: 15px 5px;
+  }
+}

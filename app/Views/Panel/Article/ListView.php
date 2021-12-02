@@ -78,19 +78,22 @@ $queryString = $this->route['queryString'];
             из <?= $rowsCount ?>
           </span>
           <div class="content-pagination__arrows">
-            <? $queryString->setUri('page', $page - 1); ?>
+            <?
+            $pageString = $queryString->get('page');
+            $queryString->set('page', $page - 1);
+            ?>
             <button class="btn content-pagination__btn" <? if (!($page - 1)) : ?> disabled <? endif; ?>>
               <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
                 <i class="fa fa-arrow-left"></i>
               </a>
             </button>
-            <? $queryString->setUri('page', $page + 1); ?>
+            <? $queryString->set('page', $page + 1); ?>
             <button class="btn content-pagination__btn" <? if (ceil($rowsCount / $limit) == $page) : ?> disabled <? endif; ?>>
               <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
                 <i class="fa fa-arrow-right"></i>
               </a>
             </button>
-            <? $queryString->removeUri('page'); ?>
+            <? $pageString ?? $queryString->remove('page'); ?>
           </div>
         </div>
       </td>

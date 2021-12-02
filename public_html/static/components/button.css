@@ -4,60 +4,63 @@
   border: none;
   font-size: 1.1rem;
   color: #fff;
-  background-color: transparent
+  background-color: transparent;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn:hover {
   cursor: pointer;
-  color: rgba(255, 255, 255, .7)
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .btn:disabled {
   pointer-events: none;
-  color: rgba(255, 255, 255, .7)
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .btn-secondary {
-  background-color: #7582eb
+  background-color: #7582eb;
 }
 
 .btn-secondary:hover {
-  background-color: #515ba4
+  background-color: #515ba4;
 }
 
 .btn-tertiary {
-  background-color: #10b981
+  background-color: #10b981;
 }
 
 .btn-tertiary:hover {
-  background-color: #07885d
+  background-color: #07885d;
 }
 
 .btn-warning {
-  background-color: #dc3545
+  background-color: #dc3545;
 }
 
 .btn-warning:hover {
-  background-color: #b42d3b
+  background-color: #b42d3b;
 }
 
 .btn-outline-secondary {
   background-color: transparent;
-  border: 1px solid rgba(117, 130, 235, .6);
-  color: #7582eb
+  border: 1px solid rgba(117, 130, 235, 0.6);
+  color: #7582eb;
 }
 
 .btn-outline-secondary:hover {
   border: 1px solid #7582eb;
-  background-color: rgba(117, 130, 235, .1);
-  color: #7582eb
+  background-color: rgba(117, 130, 235, 0.1);
+  color: #7582eb;
 }
 
 .btn-text-warning {
-  color: #dc3545
+  color: #dc3545;
 }
 
 .btn-text-warning:hover {
   color: #dc3545;
-  background-color: rgba(220, 53, 69, .1)
+  background-color: rgba(220, 53, 69, 0.1);
 }

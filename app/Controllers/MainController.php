@@ -25,7 +25,7 @@ class MainController extends Controller
         return [
             'articles' => ArticleModel::findAll(
                 [
-                    // 'where' => $where,
+                    'where' => $where,
                     'offset' => ($page - 1) * $limit,
                     'limit' => $limit,
                     'order' => [

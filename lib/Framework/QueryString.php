@@ -8,22 +8,22 @@ class QueryString
 
     function __construct(string $uri = '')
     {
-        $this->uri = $this->parseURI($uri);
+        $this->uri = $this->parse($uri);
     }
 
-    function getUri(string $name)
+    function get(string $name)
     {
         return $this->uri[$name] ?? null;
     }
 
-    function setUri(string $name, string $value)
+    function set(string $name, string $value)
     {
         $this->uri[$name] = $value ?? '';
 
         return $this->uri[$name];
     }
 
-    function removeUri(string $name)
+    function remove(string $name)
     {
         unset($this->uri[$name]);
 
@@ -37,7 +37,7 @@ class QueryString
         }, $this->uri, array_keys($this->uri)));
     }
 
-    private function parseURI(string $uri)
+    private function parse(string $uri)
     {
         $params = array_filter(explode('&', $uri), function ($value) {
             return $value;
