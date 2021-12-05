@@ -1,6 +1,6 @@
 <?
 
-use Framework\Router;
+use App\Controllers\ErrorController;
 
 require_once dirname(__DIR__) . '/config/init.php';
 require_once CONFIG . '/httpHeaders.php';
@@ -16,11 +16,14 @@ try {
         'translate' => $translate
     ]);
 } catch (\Throwable $th) {
-    if ($th->getCode() === 404) {
-        Router::redirect('/error/404');
-        exit;
+    $controllerObject = new ErrorController();
+    $controllerObject->route['controller'] = 'Error';
+    $code = 500;
+
+    if ($th->getCode() == 404) {
+        $code = 404;
     }
 
-    Router::redirect('/error/500');
-    exit;
+    $controllerObject->setCodeView($code);
+    $controllerObject->getView();
 }

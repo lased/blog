@@ -16,7 +16,7 @@ class LoginController extends Controller
             Router::redirect('/panel');
         }
         if (!$_POST) {
-            return;
+            return null;
         }
 
         $user = new UserModel($_POST);

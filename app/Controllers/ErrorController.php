@@ -8,12 +8,8 @@ class ErrorController extends Controller
 {
     public $layout = 'error';
 
-    function indexAction()
+    function setCodeView(int $code = 500)
     {
-        $this->view = '500';
-
-        if ($this->route['id'] == 404) {
-            $this->view = '404';
-        }
+        $this->view = "{$code}";
     }
 }

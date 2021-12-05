@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Авторизация</title>
-    <link rel="stylesheet" href="/static/components/loader/loader.css">
     <link href="/static/panel/login/index.css" rel="stylesheet">
 </head>
 
@@ -33,7 +32,7 @@
             <button class="btn btn-secondary" type="submit" name="submit">Войти</button>
         </form>
     </div>
-    <script defer="defer" src="/static/panel/login/index.js"></script>
+    <script defer="defer" src="/static/components/loader/loader.js"></script>
 </body>
 
 </html>

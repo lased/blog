@@ -2,13 +2,23 @@
 
 namespace Framework;
 
+/**
+ * Класс обработчика ошибок
+ */
 class ExceptionHandler
 {
     private $path;
 
+    /**
+     * Конструктор класса ExceptionHandler
+     * 
+     * @param string $path Путь к файлу логирования
+     */
     function __construct(string $path)
     {
-        if (!$path) throw new \Exception('Не корректный путь к файлу логов');
+        if (!$path) {
+            throw new \Exception('Не корректный путь к файлу логирования');
+        }
 
         $this->path = $path;
 
@@ -20,6 +30,11 @@ class ExceptionHandler
         set_exception_handler([$this, 'exceptionHandler']);
     }
 
+    /**
+     * Обработчик ошибок
+     * 
+     * @param \Throwable $exception Исключение
+     */
     function exceptionHandler(\Throwable $exception)
     {
         $this->logToFile(
@@ -33,12 +48,24 @@ class ExceptionHandler
         }
     }
 
+    /**
+     * Вывод содержимого исключения
+     * 
+     * @param \Throwable $exception Исключение
+     */
     private function showException(\Throwable $exception)
     {
         var_dump($exception);
-        die;
+        exit;
     }
 
+    /**
+     * Запись данных исключения в файл
+     * 
+     * @param string $file Файл, в котором возникло исключение
+     * @param string $line Строка, в которой возникло исключение
+     * @param string $message Сообщение исключения
+     */
     private function logToFile(string $file  = '', string $line = '', string $message = '')
     {
         $now = date('d-m-Y H:i:s');
@@ -48,6 +75,9 @@ class ExceptionHandler
         file_put_contents($this->path, $content, FILE_APPEND | LOCK_EX);
     }
 
+    /**
+     * Создание директории для логирования
+     */
     private function createDir()
     {
         $fileDirectory = implode('/', explode('/', $this->path, -1));

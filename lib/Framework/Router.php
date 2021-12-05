@@ -2,16 +2,37 @@
 
 namespace Framework;
 
+/**
+ * Класс маршрутизации
+ */
 class Router
 {
     private static $route = [];
     private static $routes = [];
 
+    /**
+     * Полуить текущий маршрут [
+     *  'controller' => 'Controller',
+     *  'action' => 'Action',
+     *  'prefix' => 'admin',
+     *  'id' => '1'
+     * ]
+     * 
+     * @return array Текущий маршрут
+     */
     static function getRoute()
     {
         return self::$route;
     }
 
+    /**
+     * Добавить маршрут по шаблону
+     * 
+     * @param string $pattern Шаблон маршрута RegExp
+     * @param array $route Дополнительные параметры к маршруту 'prefix' => 'admin'
+     * 
+     * @return bool Результат операции
+     */
     static function add(string $pattern, array $route = [])
     {
         self::$routes[$pattern] = $route;
@@ -19,6 +40,11 @@ class Router
         return true;
     }
 
+    /**
+     * Процесс поиска маршрута по определенному шаблону. После найденного маршрута, инициализируется контроллер, метод action и генерируется представление
+     * 
+     * @param string $uri URI адрес
+     */
     static function dispatch(string $uri)
     {
         $uriArr = explode('?', $uri);
@@ -39,27 +65,45 @@ class Router
                 if (method_exists($controllerObject, $action)) {
                     $data = $controllerObject->$action();
                     $controllerObject->getView($data ?? []);
-                } else
+                } else {
                     throw new \Exception("Метод {$action} не найден", 404);
-            } else
+                }
+            } else {
                 throw new \Exception("Контроллер {$controller} не найден", 404);
-        } else
+            }
+        } else {
             throw new \Exception("Страница не найдена", 404);
+        }
     }
 
+    /**
+     * Перенаправление по указаному адресу
+     * 
+     * @param string $uri Адрес перенаправления
+     */
     static function redirect(string $uri)
     {
         header("Location: $uri");
         exit;
     }
 
+    /**
+     * Поиск валидного маршрута по указанному URI
+     * 
+     * @param string $uri URI адрес
+     * 
+     * @return bool Результат операции
+     */
     private static function matchRoute(string $uri)
     {
+
         foreach (self::$routes as $pattern => $route) {
             if (preg_match("#{$pattern}#", $uri, $matches)) {
-                foreach ($matches as $key => $value)
-                    if (is_string($key))
+                foreach ($matches as $key => $value) {
+                    if (is_string($key)) {
                         $route[$key] = $value;
+                    }
+                }
 
                 $route['controller'] = Helpers::camelCase(!empty($route['controller']) ? $route['controller'] : 'Main');
                 $route['action'] = Helpers::camelCase(!empty($route['action']) ? $route['action'] : 'Index');
