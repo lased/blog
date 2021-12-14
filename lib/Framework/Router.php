@@ -107,6 +107,11 @@ class Router
 
                 $route['controller'] = Helpers::camelCase(!empty($route['controller']) ? $route['controller'] : 'Main');
                 $route['action'] = Helpers::camelCase(!empty($route['action']) ? $route['action'] : 'Index');
+
+                if (!empty($route['prefix'])) {
+                    $route['prefix'] = Helpers::camelCase($route['prefix']);
+                }
+
                 self::$route =  $route;
 
                 return true;
