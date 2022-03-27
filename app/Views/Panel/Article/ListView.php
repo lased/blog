@@ -84,13 +84,13 @@ $queryString = $this->route['queryString'];
               $queryString->set('page', $page - 1);
               ?>
               <button class="btn content-pagination__btn" <? if (!($page - 1)) : ?> disabled <? endif; ?>>
-                <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
+                <a class="content-pagination__link" href="<?= '/panel/article/list?' . $queryString->toString() ?>">
                   <i class="fa fa-arrow-left"></i>
                 </a>
               </button>
               <? $queryString->set('page', $page + 1); ?>
               <button class="btn content-pagination__btn" <? if (ceil($rowsCount / $limit) == $page) : ?> disabled <? endif; ?>>
-                <a class="content-pagination__link" href="<?= '?' . $queryString->toString() ?>">
+                <a class="content-pagination__link" href="<?= '/panel/article/list?' . $queryString->toString() ?>">
                   <i class="fa fa-arrow-right"></i>
                 </a>
               </button>
